@@ -1,9 +1,9 @@
 import * as fs from 'fs'
-import {Tag, Song, Line, Chord, Part} from './chordproObjects'
-import {parseSong} from './songParser'
+import {Tag, Song, Line, Chord, Part} from '../chordproObjects'
+import {parseSong} from '../songParser'
 
 test('whole Song', () => {
-    const file = fs.readFileSync('src/chordpro_parser/testsong.cho', 'utf-8')
+    const file = fs.readFileSync('src/chordpro_parser/test/testsong.cho', 'utf-8')
 
     let tag1 = new Tag("title", "Testsong") 
     let tag2 = new Tag("artist", "Benjamin Koderisch")
@@ -26,6 +26,7 @@ test('whole Song', () => {
     let part2 = new Part("Verse", [line4])
 
     let song = new Song([tag1, tag2], [part1, part2])
+
     console.log(song.toText())
 
     expect(parseSong(file)).toStrictEqual(song)

@@ -13,16 +13,16 @@ export function parseSong(file: string) {
 
     for(let line of content){
         result = parseLine(line) 
-        // Handle TagOpen and TagClose
-        if(result instanceof Tag)
-            if(result.tag === "c"){
-                if(lines.length > 0){
-                    parts.push(new Part(newPartName, lines))
-                    lines = []
-                }
-                newPartName = result.content
-            } else
-                tags.push(result)
+        if (result instanceof PartOpenTag) {
+            if(lines.length > 0){
+                parts.push(new Part(newPartName, lines))
+                lines = []
+            }
+            newPartName = result.name
+        } else {
+            if(result instanceof Tag)
+                   tags.push(result)
+        }
         if(result instanceof Line) {
             if(parts.length !== 0 || lines.length !== 0 || result.lyrics !== "")
                 lines.push(result)

@@ -31,9 +31,11 @@ export class Tag{
 export class PartOpenTag {
     name: 'Chorus' | 'Verse'
     constructor(tag: string){
-        if(tag === 'soc')
+        if(tag === 'soc') {
             this.name = 'Chorus'
-        this.name = 'Verse'
+        } else {
+            this.name = 'Verse'
+        }
     }
 }
 

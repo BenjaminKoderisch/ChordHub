@@ -6,11 +6,12 @@ const CHORD_CLOSE = ']'
 const TAG_OPEN = '{'
 const TAG_CLOSE = '}'
 const TAG_SEPERATOR = ':'
+const COMMENT = 'c'
 
 const NOT_FOUND = -1
 
-const PART_OPEN = ['{soc}', '{sov}']
-const PART_CLOSE = ['{eoc}', '{eov}']
+const PART_OPEN = ['soc', 'sov']
+const PART_CLOSE = ['eoc', 'eov']
 
 function parseChordLine(line: string): Line{
     let chords: Chord[] = []
@@ -28,23 +29,27 @@ function parseChordLine(line: string): Line{
 }
 
 function parseTagLine(line: string): Tag | PartOpenTag | PartCloseTag {
-    let firstTag = line.indexOf(TAG_OPEN)
-    let secondTag = line.indexOf(TAG_CLOSE)
-    let seperator = line.indexOf(TAG_SEPERATOR)
+    let firstTagPos = line.indexOf(TAG_OPEN)
+    let secondTagPos = line.indexOf(TAG_CLOSE)
+    let seperatorPos = line.indexOf(TAG_SEPERATOR)
 
-    if (seperator === NOT_FOUND) {
-        let tag = line.substring(firstTag+1, secondTag)
+    if (seperatorPos === NOT_FOUND) {
+        let tag = line.substring(firstTagPos+1, secondTagPos)
         if (PART_OPEN.includes(tag)){
             return new PartOpenTag(tag)
         }
         if (PART_CLOSE.includes(tag)) {
             return new PartCloseTag()
         }   
-    }   
+    }
 
-    let tag = line.substring(firstTag+1, seperator).trim()
-    let content = line.substring(seperator+1, secondTag).trim()
 
+    let tag = line.substring(firstTagPos+1, seperatorPos).trim()
+    let content = line.substring(seperatorPos+1, secondTagPos).trim()
+
+    if (tag === COMMENT) {
+        return new PartOpenTag(content)
+    }
     return new Tag(tag, content) 
 }
 

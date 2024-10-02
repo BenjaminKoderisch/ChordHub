@@ -1,5 +1,5 @@
-import {parseLine} from "./lineParser" 
-import {Line, Chord, Tag} from "./chordproObjects"
+import {parseLine} from "../lineParser" 
+import {Line, Chord, Tag, PartOpenTag, PartCloseTag} from "../chordproObjects"
 
 
 test('line with just text', () => {
@@ -28,7 +28,7 @@ test('line with text and 2 same chords', () => {
 })
 
 test('line with tag', () => {
-    let tag = new Tag("c", "comment")
+    let tag = new PartOpenTag("comment")
     expect(parseLine("\{c: comment\}")).toStrictEqual(tag)
 })
 
@@ -38,4 +38,10 @@ test('line is comment', () => {
 
 test('line is empty', () => {
     expect(parseLine("")).toStrictEqual(new Line("", []))
+})
+
+test('line is open tag for chorus', () => {
+    let line = new PartOpenTag("soc") 
+    expect(parseLine("{soc}")).toStrictEqual(line)
+    expect(line.name).toBe("Chorus")
 })
