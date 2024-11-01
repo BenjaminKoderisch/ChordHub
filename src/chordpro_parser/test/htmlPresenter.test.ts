@@ -1,8 +1,8 @@
-import * as fs from 'fs'
 import { Tag, Song, Line, LyricChord, Part } from '../chordproObjects'
-import { parseSong } from '../songParser'
+import { toHtml } from '../htmlPresenter'
+import fs from 'fs'
 
-test('whole Song', () => {
+test('To HTML', () => {
   const file = fs.readFileSync('src/chordpro_parser/test/testsong.cho', 'utf-8')
 
   let tag1 = new Tag('title', 'Testsong')
@@ -34,5 +34,8 @@ test('whole Song', () => {
 
   let song = new Song([tag1, tag2], [emptyPart, part1, part2])
 
-  expect(parseSong(file)).toStrictEqual(song)
+  let res = toHtml(song)
+  console.log(res)
+
+  expect(res).toEqual('<p>Testsong</p>')
 })

@@ -1,0 +1,46 @@
+#title {
+  color: brown;
+  font-size: 1.3em;
+}
+
+#artist {
+  color: blue;
+  font-size: 1.3em;
+}
+
+#chord {
+  white-space: pre;
+  position: absolute;
+  top: -1.5em;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  font-size: smaller; 
+}
+
+#lyrics {
+  display: inline-block;
+}
+
+.song-line {
+  display: flex;
+}
+
+.lyric-chord {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px; /* Space between lyric chunks */
+}
+.chord {
+  position: absolute;
+  top: -1.5em; /* Adjust this value to place the chord above the text */
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  font-size: smaller; /* Adjust for chord size */
+}
+
+.lyric {
+  display: inline-block;
+}
