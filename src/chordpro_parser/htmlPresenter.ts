@@ -14,16 +14,6 @@ export function toHtml(song: Song): string {
   <body>
     <p id="title">${song.title}</p>
     <p id="artist">${song.artist}</p>
-<div class="song-line">
-  <span class="lyric-chord">
-    <span class="chord">A</span>
-    <span class="lyric">This is </span>
-  </span>
-  <span class="lyric-chord">
-    <span class="chord">B</span>
-    <span class="lyric">my song</span>
-  </span>
-</div>
     <div id=textAndChords>${chordAndTextToHtml(song)}</div>
   </body>
 </html>`
@@ -35,14 +25,29 @@ function chordAndTextToHtml(song: Song) {
   song.parts.forEach((part) => {
     result += `<p id=partname>${part.name}</p>`
     part.lines.forEach((line) => {
-      let lastPos = 0
       result += '<span class="song-line">'
       line.lyricChord.forEach((chord) => {
-        result += '<span class="lyric-chord">'
-        //result += `<p id=chord>${chord.chord}</p>`
-        //result += `<p id=lyrics>${line.lyrics.substring(lastPos - 1, chord.lyric)}</p>`
-        result += '</span>'
-        //lastPos = chord.chord.length + chord.lyric
+        if (chord.chord === '') {
+          if (chord.lyric !== ' ') {
+            result += '<span class="lyric">'
+            result += chord.lyric
+            result += '&nbsp;'
+            result += '</span>'
+          }
+        } else {
+          result += '<span class="lyric-chord">'
+
+          result += '<code class="chord">'
+          result += chord.chord
+          result += '</code>'
+
+          result += '<span class="chordLyrics">'
+          result += chord.lyric
+          result += '&nbsp;'
+          result += '</span>'
+
+          result += '</span>'
+        }
       })
       result += '</span>'
     })
